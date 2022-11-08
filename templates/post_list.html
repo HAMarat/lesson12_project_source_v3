@@ -14,7 +14,7 @@
 
     {% for post in find_posts_dict %}
     <div class="post">
-        <img src="{{ post.pic }}" width="100%" alt="">
+        <img src="{{ post.pic }}" width="100%" alt="{{ post.pic }}">
         <p>{{ post.content }}</p>
     </div>
     <hr>
