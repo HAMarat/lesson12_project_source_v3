@@ -4,9 +4,6 @@ from loader.loader import loader
 from main.main import main
 
 
-POST_PATH = "posts.json"
-UPLOAD_FOLDER = "uploads/images"
-
 app = Flask(__name__)
 
 app.register_blueprint(main, url_prefix='')
@@ -15,31 +12,20 @@ app.register_blueprint(loader, url_prefix='')
 
 @app.errorhandler(404)
 def page_not_found(error):
+    """
+    Представление для обработки ошибки не найденной страницы
+    """
     return render_template('page_404.html', title='Страница не найдена'), 404
 
 
 @app.route('/search/', methods=['GET'])
 def search_posts():
-    s = request.args['s']
-    find_posts_dict = find_posts(s)
-    if find_posts_dict:
-        return render_template('post_list.html', find_posts_dict=find_posts_dict, s=s)
-    return "Не найдено"
-
-
-@app.route("/list")
-def page_tag():
-    pass
-
-
-@app.route("/post", methods=["GET", "POST"])
-def page_post_form():
-    pass
-
-
-@app.route("/post", methods=["POST"])
-def page_post_upload():
-    pass
+    """
+    Представление для отображения найденных постов
+    """
+    search_text = request.args['s']
+    find_posts_dict = find_posts(search_text)
+    return render_template('post_list.html', find_posts_dict=find_posts_dict, search_text=search_text)
 
 
 @app.route("/uploads/<path:path>")
