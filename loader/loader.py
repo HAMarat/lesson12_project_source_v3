@@ -12,8 +12,8 @@ def load_post():
 def post_uploaded():
     post_picture = request.files.get('picture')
     file_name = post_picture.filename
-    path_load = f'./uploads/images/{file_name}'
-    post_picture.save(path_load)
+    path_load = f'/uploads/images/{file_name}'
+    post_picture.save(F'.{path_load}')
 
     post_text = request.form.get('content')
 
