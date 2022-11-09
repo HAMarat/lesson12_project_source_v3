@@ -3,6 +3,7 @@ from functions import append_json_data
 loader = Blueprint('loader', __name__, template_folder='templates', static_folder='static')
 
 UPLOAD_FOLDER = "uploads/images"
+ALLOWED_EXTENSIONS = ['jpg', 'jpeg', 'png']
 
 
 @loader.route('/post')
