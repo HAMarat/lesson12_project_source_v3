@@ -32,3 +32,5 @@ def append_json_data(path: str, text: str) -> None:
         post_dict = {'pic': path, 'content': text}
         json_data.append(post_dict)
         json.dump(json_data, file, ensure_ascii=False, indent=4)
+        return
+
