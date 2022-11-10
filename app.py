@@ -1,3 +1,4 @@
+import logging
 from flask import Flask, request, render_template, send_from_directory
 from functions import find_posts
 from loader.loader import loader
@@ -8,6 +9,8 @@ app = Flask(__name__)
 
 app.register_blueprint(main, url_prefix='')
 app.register_blueprint(loader, url_prefix='')
+
+logging.basicConfig(filename="basic.log", level=logging.INFO)
 
 
 @app.errorhandler(404)
@@ -25,6 +28,7 @@ def search_posts():
     """
     search_text = request.args['s']
     find_posts_dict = find_posts(search_text)
+    logging.info(f"Выполнен поиск по запросу {search_text}")
     return render_template('post_list.html', find_posts_dict=find_posts_dict, search_text=search_text)
 
 
