@@ -1,7 +1,8 @@
 import logging
-
 from flask import Blueprint, render_template, request
-from functions import append_json_data
+
+from loader.utils import is_file_extension_allowed, append_json_data
+
 loader = Blueprint('loader', __name__, template_folder='templates', static_folder='static')
 
 UPLOAD_FOLDER = "uploads/images"
@@ -26,16 +27,19 @@ def post_uploaded():
 
     if not post_picture:
         logging.error("Файл не загружен")
-        return "Файл не загружен"
+        return render_template("page_error_with_file.html", text="Файл не загружен")
 
     # сохраняем название объекта
     file_name = post_picture.filename
 
+    if not is_file_extension_allowed(file_name, ALLOWED_EXTENSIONS):
+        return render_template("page_error_with_file.html", text="Разрешение файла не поддерживается")
+
     # создаем путь для сохранения объекта с оригинальным названием
-    path_load = f'{UPLOAD_FOLDER}/{file_name}'
+    path_load = f'/{UPLOAD_FOLDER}/{file_name}'
 
     # сохраняем объект по ранее полученному пути
-    post_picture.save(f'./{path_load}')
+    post_picture.save(f'.{path_load}')
 
     # сохраняем текст полученный из формы 'content'
     post_text = request.form.get('content')

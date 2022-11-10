@@ -1,2 +1,5 @@
 /venv
 *.log
+/uploads/images
+!/uploads/images/cat.png
+/posts.json

@@ -1,6 +1,6 @@
 import logging
 from flask import Flask, request, render_template, send_from_directory
-from functions import find_posts
+from utils import find_posts
 from loader.loader import loader
 from main.main import main
 
@@ -10,7 +10,7 @@ app = Flask(__name__)
 app.register_blueprint(main, url_prefix='')
 app.register_blueprint(loader, url_prefix='')
 
-logging.basicConfig(filename="basic.log", level=logging.INFO)
+logging.basicConfig(filename="logs/basic.log", level=logging.INFO)
 
 
 @app.errorhandler(404)
@@ -18,7 +18,7 @@ def page_not_found(error):
     """
     Представление для обработки ошибки не найденной страницы
     """
-    return render_template('page_404.html', title='Страница не найдена'), 404
+    return render_template('404.html', title='Страница не найдена'), 404
 
 
 @app.route('/search/', methods=['GET'])
